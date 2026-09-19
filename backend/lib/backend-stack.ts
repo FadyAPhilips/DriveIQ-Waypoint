@@ -1,16 +1,23 @@
-import * as cdk from 'aws-cdk-lib/core';
-import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import * as cdk from "aws-cdk-lib";
+import { Construct } from "constructs";
+import * as lambda from "aws-cdk-lib/aws-lambda-nodejs";
+import * as apigateway from "aws-cdk-lib/aws-apigateway";
 
 export class BackendStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // The code that defines your stack goes here
+    const helloLambda = new lambda.NodejsFunction(this, "HelloHandler", {
+      entry: "lambda/hello.ts",
+      handler: "handler",
+    });
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'BackendQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    const api = new apigateway.LambdaRestApi(this, "WaypointApi", {
+      handler: helloLambda,
+    });
+
+    new cdk.CfnOutput(this, "ApiUrl", {
+      value: api.url,
+    });
   }
 }
