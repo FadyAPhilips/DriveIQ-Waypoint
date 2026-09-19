@@ -33,7 +33,7 @@ These were confirmed on 2026-09-19. Re-check if this plan is executed much later
 | Base URL with and without trailing slash | Both return HTTP 200 |
 | `GET /hello` today | Returns the same hello payload |
 | `npx tsc --noEmit` in `frontend/` | Exits 0 on the untouched repo |
-| `process.env.EXPO_PUBLIC_*` typing | Typechecks clean with no extra `@types` package |
+| `process.env.EXPO_PUBLIC_*` typing | Needs `@types/node`, now an explicit devDependency in `frontend/package.json`. It originally typechecked only because that package was hoisted in transitively, which a dependency change could have silently removed. |
 
 Retrieve the URL with:
 
