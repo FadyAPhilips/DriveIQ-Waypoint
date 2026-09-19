@@ -4,7 +4,7 @@
 
 **Goal:** Make the Expo app fetch and display a message from the already-deployed hello Lambda, with visible loading, success, and error states.
 
-**Architecture:** A small API layer lives under `frontend/src/api/`. `client.ts` owns base-URL resolution, the `fetch` call, and a typed `ApiError`; `hello.ts` is a thin per-endpoint wrapper over it. `App.tsx` holds a three-state discriminated union in `useState` and renders one branch per state. Every later milestone adds a sibling to `hello.ts` rather than touching `client.ts`.
+**Architecture:** A small API layer lives under `frontend/src/api/`. `client.ts` owns base-URL resolution, the `fetch` call, and a typed `ApiError`; `hello.ts` is a thin per-endpoint wrapper over it. `App.tsx` holds a three-state discriminated union in `useState` and renders one branch per state. Later milestones add siblings to `hello.ts`. `client.ts` changes only when the transport contract itself changes, which Milestone 2 will require: `apiRequest` currently discards the response body on a non-ok status, so it cannot yet surface a structured backend error.
 
 **Tech Stack:** Expo SDK ~57.0.24, React 19.2.3, React Native 0.86.3, TypeScript ~6.0.3 (strict). No new dependencies.
 

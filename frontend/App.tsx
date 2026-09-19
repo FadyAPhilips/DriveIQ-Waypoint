@@ -63,7 +63,11 @@ export default function App() {
       )}
 
       <View style={styles.actions}>
-        <Button title="Retry" onPress={() => void load()} />
+        <Button
+          title="Retry"
+          onPress={() => void load()}
+          disabled={state.status === "loading"}
+        />
       </View>
 
       <StatusBar style="auto" />

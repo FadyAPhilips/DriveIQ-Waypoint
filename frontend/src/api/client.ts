@@ -34,7 +34,7 @@ function resolveBaseUrl(): string {
 }
 
 export async function apiRequest<T>(
-  path: string,
+  path: `/${string}`,
   init?: RequestInit
 ): Promise<T> {
   const url = `${resolveBaseUrl()}${path}`;
@@ -42,7 +42,8 @@ export async function apiRequest<T>(
   let response: Response;
   try {
     response = await fetch(url, init);
-  } catch {
+  } catch (cause) {
+    console.warn("[api] fetch failed", url, cause);
     throw new ApiError(
       "network",
       `Could not reach ${url}. Check the device's network connection and ` +
