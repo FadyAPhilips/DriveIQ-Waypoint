@@ -1,0 +1,6 @@
+# Subagent-driven development scratch: ledgers, task briefs, review packages.
+# Per-plan working state, not source. The git history is the durable record.
+.superpowers/
+
+# macOS
+.DS_Store
