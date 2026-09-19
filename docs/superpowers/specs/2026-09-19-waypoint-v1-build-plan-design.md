@@ -137,11 +137,11 @@ Resist the pull to build the next milestone early because it is "only a few more
 
 **Prerequisites.** None. This is the starting point.
 
-**Scope.** Replace the Expo template `App.tsx` with a screen that calls the existing hello Lambda and renders the returned message. Show three visibly distinct states: loading, success, and error. Add a small reusable fetch helper that later milestones build on. Put the deployed API Gateway URL in a gitignored `.env` as `EXPO_PUBLIC_API_URL`, with a committed `.env.example`.
+**Scope.** Replace the Expo template `App.tsx` with a screen that calls the existing hello Lambda and renders the returned message. Show three visibly distinct states: loading, success, and error. Add a small reusable fetch helper that later milestones build on. Put the deployed API Gateway URL in `frontend/.env.local` as `EXPO_PUBLIC_API_URL`, with a committed `.env.example`. Use `.env.local` specifically: the existing `frontend/.gitignore` ignores `.env*.local` but **not** plain `.env`, so a file named `.env` would be committed.
 
 **Done when.** Expo Go on the Android device displays the message that came from the deployed Lambda, and killing the URL in `.env` produces a readable on-screen error rather than a blank screen or a silent hang.
 
-**Known traps.** The `EXPO_PUBLIC_` prefix is required for Expo to inline the variable at build time; a differently named variable is silently undefined. Changing `.env` needs a dev server restart, not just a reload. Render the error text on screen, because a silent failure is exactly what a wrong URL looks like.
+**Known traps.** The `EXPO_PUBLIC_` prefix is required for Expo to inline the variable at build time; a differently named variable is silently `undefined`. Because the value is inlined rather than read at runtime, editing `.env.local` needs a full in-app reload to take effect, via the shake gesture then Reload in Expo Go. A dev server restart is not required, though `npx expo start --clear` resolves stale-cache cases. Render the error text on screen, because a silent failure is exactly what a wrong URL looks like.
 
 **Plan seed.** The plan must decide where the fetch helper lives and what its error shape is, since every later feature inherits it. Keep it small: a base URL, JSON parsing, and a typed error. Do not introduce a data-fetching library.
 
